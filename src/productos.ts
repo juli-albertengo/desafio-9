@@ -19,7 +19,7 @@ class Producto implements Producto {
     }   
 }
 
-export class Productos{
+class Productos{
     productos: Array<Producto>;
 
     constructor(arrayProductos:Array<Producto>){
@@ -27,9 +27,6 @@ export class Productos{
     }
 
     getAllProducts(){
-        if(this.productos === null || this.productos === []){
-            return {error : 'No hay productos cargados'}
-        }
         return this.productos;
     }
 
@@ -83,3 +80,9 @@ export class Productos{
     }
 
 }
+
+export const productos = new Productos([
+    {id:1, title: 'Escuadra', price: 233, thumbnail: '../../img/escuadra.png'},
+    {id: 2, title: 'Calculadora', price: 300, thumbnail: '../../img/calculadora.png'},
+    {id: 3, title: 'Globo Terráqueo', price: 250, thumbnail: '../../img/globoTerraqueo.png'}
+]);

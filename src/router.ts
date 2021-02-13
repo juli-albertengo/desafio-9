@@ -1,5 +1,6 @@
 import express, {Application, Request, Response} from 'express';
-import {Productos} from './productos';
+import {productos} from './productos';
+import path from 'path'
 
 const app:Application = express();
 
@@ -8,7 +9,6 @@ app.use(express.urlencoded({extended: true}));
 
 const router = express.Router();
 
-const productos = new Productos([{id:1, title: 'Escuadra', price: 233, thumbnail: 'urlImagen'}]);
 
 router.get('/productos', (req:Request, res:Response) => {
     let productosListados = productos.getAllProducts();
@@ -30,8 +30,8 @@ router.post('/productos', (req:Request, res:Response) => {
         price,
         thumbnail
     }
-    let productoIncorporado = productos.addProduct(producto);
-    res.json(productoIncorporado);
+    productos.addProduct(producto);
+    res.sendFile(path.join((__dirname + '/index.html')).replace('src', 'public') )
 })
 
 router.put('/productos/:id', (req:Request, res:Response) => {
