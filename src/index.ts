@@ -2,7 +2,7 @@ import express, {Application, Request, Response} from 'express';
 import router from './router';
 import path from 'path'
 //import handlebars from 'express-handlebars';
-import pug from 'pug';
+//import pug from 'pug';
 import {productos} from './productos';
 
 const app:Application = express();
@@ -12,17 +12,16 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static('public'));
 
-app.set('views', './public/views');
-app.set('view engine', 'pug');
-
+app.set('views', './public/views/pages');
+app.set('view engine', 'ejs');
 
 /*Vista de tabla*/
 app.get('/productos/vista', (req:Request, res: Response) => {
     const misProductos = productos.getAllProducts()
     if(misProductos.length === 0){
-        res.render('tabla.pug', {mensaje: 'No hay productos'})
+        res.render('index.ejs', {mensaje: 'No hay productos'})
     } else {
-        res.render('tabla.pug', {misProductos});
+        res.render('index.ejs', {misProductos});
     }
 })
 
