@@ -1,7 +1,8 @@
 import express, {Application, Request, Response} from 'express';
 import router from './router';
 import path from 'path'
-import handlebars from 'express-handlebars';
+//import handlebars from 'express-handlebars';
+import pug from 'pug';
 import {productos} from './productos';
 
 const app:Application = express();
@@ -11,26 +12,17 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static('public'));
 
-/* Desafio Clase 10 - Motores de plantilla */
-app.engine('hbs', handlebars({
-    extname: '.hbs',
-    defaultLayout: 'index.hbs',
-    /*Esta parte no sabia como resolverla, hice esto y funciona */
-    layoutsDir: path.join((__dirname + '/views/layouts')).replace('src', 'public'),
-    partialsDir: path.join((__dirname + '/views/partials')).replace('src', 'public')  
-    })
-);
-
-app.set('view engine', 'hbs');
 app.set('views', './public/views');
+app.set('view engine', 'pug');
+
 
 /*Vista de tabla*/
 app.get('/productos/vista', (req:Request, res: Response) => {
     const misProductos = productos.getAllProducts()
     if(misProductos.length === 0){
-        res.render('main', {mensaje: 'No hay productos'})
+        res.render('tabla.pug', {mensaje: 'No hay productos'})
     } else {
-        res.render('main', {misProductos});
+        res.render('tabla.pug', {misProductos});
     }
 })
 
